@@ -123,12 +123,33 @@ var app = new Vue({
         ]
       }
     ],
-    selected: 0
+    selected: 0,
+    newMess: '',
+    newMessComplete: {
+      day: '',
+      hour: '',
+      type: '',
+      text: ''
+    },
+    replyComplete: {
+      day: '2 feb 2020',
+      hour: '10:26',
+      type: 'received',
+      text: 'Okay'
+    }
   },
   created(){
     this.selected = this.contacts[0];
   },
   methods: {
-
+    messageSent() {
+      this.newMessComplete.day = '2 feb 2020';
+      this.newMessComplete.hour = '10:25';
+      this.newMessComplete.type = 'sent';
+      this.newMessComplete.text = this.newMess;
+      this.newMess = '';
+      this.selected.chat.splice(this.selected.chat.length, 0, this.newMessComplete);
+      setTimeout(() => this.selected.chat.splice(this.selected.chat.length, 0, this.replyComplete), 1000)
+    }
   }
 });

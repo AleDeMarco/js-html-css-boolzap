@@ -66,7 +66,7 @@
         <div class="emoticon">
           <i class="far fa-smile"></i>
         </div>
-        <input class="message-bar" name="message" placeholder="Scrivi un messaggio">
+        <input class="message-bar" name="message" placeholder="Scrivi un messaggio" @keyup.enter="messageSent" v-model="newMess">
         <div class="audio">
           <i class="fas fa-microphone"></i>
         </div>
