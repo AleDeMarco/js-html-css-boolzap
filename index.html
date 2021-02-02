@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="app">
     <div class="left">
       <div class="left-header">
         <img src="img/avatar_1.jpg" alt="Propic">
@@ -35,36 +35,18 @@
         <input class="search-bar" name="search" placeholder="Cerca o inizia una nuova chat">
       </div>
       <div class="left-chat">
-        <div class="contact active">
-          <img src="img/avatar_2.jpg" alt="Propic">
+        <div class="contact" v-for="contact in contacts" :class="{active:contact == selected}" @click="selected = contact">
+          <img :src="contact.propic" alt="Propic">
           <div class="contact-name">
-            Michele
-          </div>
-        </div>
-        <div class="contact">
-          <img src="img/avatar_3.jpg" alt="Propic">
-          <div class="contact-name">
-            Fabio
-          </div>
-        </div>
-        <div class="contact">
-          <img src="img/avatar_4.jpg" alt="Propic">
-          <div class="contact-name">
-            Samuele
-          </div>
-        </div>
-        <div class="contact">
-          <img src="img/avatar_5.jpg" alt="Propic">
-          <div class="contact-name">
-            Mario
+            {{ contact.name }}
           </div>
         </div>
       </div>
     </div>
     <div class="right">
       <div class="right-header">
-        <img src="img/avatar_2.jpg" alt="Propic">
-        <div class="username">Michele</div>
+        <img :src="selected.propic" alt="Propic">
+        <div class="username">{{ selected.name }}</div>
         <div class="status">online</div>
         <div class="icon-box">
           <i class="fas fa-ellipsis-v"></i>
@@ -74,29 +56,9 @@
       </div>
       <div class="chat-box-container">
         <div class="chat-box">
-          <div class="message sent">
-            Test
-            <div class="data">10:22</div>
-          </div>
-          <div class="message sent">
-            Test
-            <div class="data">10:22</div>
-          </div>
-          <div class="message received">
-            Test
-            <div class="data">10:22</div>
-          </div>
-          <div class="message sent">
-            Test
-            <div class="data">10:22</div>
-          </div>
-          <div class="message received">
-            Test
-            <div class="data">10:22</div>
-          </div>
-          <div class="message received">
-            Test
-            <div class="data">10:22</div>
+          <div class="message" v-for="mess in selected.chat" :class="{sent:mess.type == 'sent', received:mess.type == 'received'}">
+            {{ mess.text }}
+            <div class="data">{{ mess.hour }}</div>
           </div>
         </div>
       </div>
