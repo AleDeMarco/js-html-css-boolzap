@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 </head>
 <body>
@@ -32,10 +33,10 @@
         <label class="search-label" for="search">
           <i class="fas fa-search"></i>
         </label>
-        <input class="search-bar" name="search" placeholder="Cerca o inizia una nuova chat">
+        <input class="search-bar" name="search" placeholder="Cerca o inizia una nuova chat" @keyup="filterChat" v-model="newFilter">
       </div>
       <div class="left-chat">
-        <div class="contact" v-for="contact in contacts" :class="{active:contact == selected}" @click="selected = contact">
+        <div class="contact" v-for="contact in filtered" :class="{active:contact == selected}" @click="selected = contact">
           <img :src="contact.propic" alt="Propic">
           <div class="contact-name">
             {{ contact.name }}
