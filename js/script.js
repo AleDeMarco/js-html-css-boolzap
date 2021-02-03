@@ -22,7 +22,7 @@ var app = new Vue({
             day: 'Tue 2 Feb',
             hour: '10:23',
             type: 'received',
-            text: 'Ti sei ricordato di comprare il regalo per la festa di Manuela?'
+            text: 'Ti sei ricordato di comprare il regalo per la festa di Anna?'
           },
           {
             day: 'Tue 2 Feb',
@@ -138,7 +138,8 @@ var app = new Vue({
       text: 'Okay'
     },
     filtered: [],
-    newFilter: ''
+    newFilter: '',
+    boxOpen:''
   },
   created(){
     this.filtered = this.contacts;
@@ -152,6 +153,7 @@ var app = new Vue({
       this.newMessComplete.text = this.newMess;
       this.newMess = '';
       this.selected.chat.splice(this.selected.chat.length, 0, this.newMessComplete);
+      this.newMessComplete = {};
       setTimeout(() => this.selected.chat.splice(this.selected.chat.length, 0, this.replyComplete), 1000);
     },
     filterChat() {
@@ -160,9 +162,27 @@ var app = new Vue({
       for (var i = 0; i < this.contacts.length; i++) {
         if (this.contacts[i].name.includes(this.newFilter)) {
           this.filtered.push(this.contacts[i]);
-          console.log(this.newFilter);
         }
       }
+    },
+    menuOpener(index) {
+      document.getElementById('box'+index).style.display = 'block';
+      document.getElementById('menu-closer').style.display = 'block';
+      this.boxOpen = 'box'+index;
+    },
+    menuCloser() {
+      document.getElementById(this.boxOpen).style.display = 'none';
+      document.getElementById('menu-closer').style.display = 'none';
+      document.getElementById('infobox').style.display = 'none';
+      document.getElementById('lines').style.display = 'none';
+    },
+    infBox(index) {
+      document.getElementById('infobox'+index).style.display = 'block';
+    },
+    deleteMess(index) {
+      this.selected.chat.splice(index, 1);
+      document.getElementById(this.boxOpen).style.display = 'none';
+      document.getElementById('menu-closer').style.display = 'none';
     }
   }
 });

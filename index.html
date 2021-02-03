@@ -57,9 +57,18 @@
       </div>
       <div class="chat-box-container">
         <div class="chat-box">
-          <div class="message" v-for="mess in selected.chat" :class="{sent:mess.type == 'sent', received:mess.type == 'received'}">
+          <div class="message" v-for="(mess, index) in selected.chat" :class="{sent:mess.type == 'sent', received:mess.type == 'received'}">
             {{ mess.text }}
             <div class="data">{{ mess.hour }}</div>
+            <i class="fas fa-angle-down" @click="menuOpener(index)"></i>
+            <div class="menu-box" :id="'box' + index">
+              <div class="info" @click="infBox(index)">Informazioni</div>
+              <div class="info-box" :id="'infobox' + index">
+                <div class="line" id="lines">Giorno: {{ mess.day }}</div>
+                <div class="line" id="lines">Orario: {{ mess.hour }}</div>
+              </div>
+              <div class="delete" @click="deleteMess(index)">Elimina messaggio</div>
+            </div>
           </div>
         </div>
       </div>
@@ -73,6 +82,7 @@
         </div>
       </div>
     </div>
+    <div id="menu-closer" @click="menuCloser"></div>
   </div>
   <script src="js/script.js" charset="utf-8"></script>
 </body>
