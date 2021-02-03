@@ -5,6 +5,7 @@ var app = new Vue({
       {
         name: 'Michele',
         propic: 'img/avatar_2.jpg',
+        lastMess: 'No, cavolo! Adesso vado subito a prenderlo!',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -35,6 +36,7 @@ var app = new Vue({
       {
         name: 'Fabio',
         propic: 'img/avatar_3.jpg',
+        lastMess: 'Sto bene, grazie! si va bene, che bello uscire tutti insieme!',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -65,6 +67,7 @@ var app = new Vue({
       {
         name: 'Samuele',
         propic: 'img/avatar_4.jpg',
+        lastMess: 'Anche io tutto bene, grazie!',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -95,6 +98,7 @@ var app = new Vue({
       {
         name: 'Mario',
         propic: 'img/avatar_5.jpg',
+        lastMess: 'Anche io tutto bene, sto frequentando un corso bellissimo!',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -151,10 +155,14 @@ var app = new Vue({
       this.newMessComplete.hour = dayjs().format('HH:mm');
       this.newMessComplete.type = 'sent';
       this.newMessComplete.text = this.newMess;
+      this.selected.lastMess = this.newMess;
       this.newMess = '';
       this.selected.chat.splice(this.selected.chat.length, 0, this.newMessComplete);
       this.newMessComplete = {};
-      setTimeout(() => this.selected.chat.splice(this.selected.chat.length, 0, this.replyComplete), 1000);
+      setTimeout(() => {
+        this.selected.chat.splice(this.selected.chat.length, 0, this.replyComplete);
+        this.selected.lastMess = this.replyComplete.text;
+      }, 1000);
     },
     filterChat() {
       this.filtered = [];
@@ -181,6 +189,7 @@ var app = new Vue({
     },
     deleteMess(index) {
       this.selected.chat.splice(index, 1);
+      this.selected.lastMess = this.selected.chat[index-1].text;
       document.getElementById(this.boxOpen).style.display = 'none';
       document.getElementById('menu-closer').style.display = 'none';
     }
