@@ -176,6 +176,8 @@ var app = new Vue({
     menuOpener(index) {
       document.getElementById('box'+index).style.display = 'block';
       document.getElementById('menu-closer').style.display = 'block';
+      document.getElementById('infobox'+index).style.display = 'none';
+      document.getElementById('lines').style.display = 'none';
       this.boxOpen = 'box'+index;
     },
     menuCloser() {
