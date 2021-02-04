@@ -6,6 +6,7 @@ var app = new Vue({
         name: 'Michele',
         propic: 'img/avatar_2.jpg',
         lastMess: 'No, cavolo! Adesso vado subito a prenderlo!',
+        lastSeen: 'Ultimo accesso oggi alle 10:23',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -37,6 +38,7 @@ var app = new Vue({
         name: 'Fabio',
         propic: 'img/avatar_3.jpg',
         lastMess: 'Sto bene, grazie! si va bene, che bello uscire tutti insieme!',
+        lastSeen: 'Ultimo accesso oggi alle 10:23',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -68,6 +70,7 @@ var app = new Vue({
         name: 'Samuele',
         propic: 'img/avatar_4.jpg',
         lastMess: 'Anche io tutto bene, grazie!',
+        lastSeen: 'Ultimo accesso oggi alle 10:23',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -99,6 +102,7 @@ var app = new Vue({
         name: 'Mario',
         propic: 'img/avatar_5.jpg',
         lastMess: 'Anche io tutto bene, sto frequentando un corso bellissimo!',
+        lastSeen: 'Ultimo accesso oggi alle 10:23',
         chat: [
           {
             day: 'Tue 2 Feb',
@@ -129,18 +133,8 @@ var app = new Vue({
     ],
     selected: 0,
     newMess: '',
-    newMessComplete: {
-      day: '',
-      hour: '',
-      type: '',
-      text: ''
-    },
-    replyComplete: {
-      day: dayjs().format('ddd D MMM'),
-      hour: dayjs().format('HH:mm'),
-      type: 'received',
-      text: 'Okay'
-    },
+    newMessComplete: {},
+    replyComplete: {},
     filtered: [],
     newFilter: '',
     boxOpen:''
@@ -151,10 +145,15 @@ var app = new Vue({
   },
   methods: {
     messageSent() {
+      this.selected.lastSeen = 'online';
       this.newMessComplete.day = dayjs().format('ddd D MMM');
       this.newMessComplete.hour = dayjs().format('HH:mm');
       this.newMessComplete.type = 'sent';
       this.newMessComplete.text = this.newMess;
+      this.replyComplete.day = dayjs().format('ddd D MMM');
+      this.replyComplete.hour = dayjs().format('HH:mm');
+      this.replyComplete.type = 'received';
+      this.replyComplete.text = 'Okay';
       this.selected.lastMess = this.newMess;
       this.newMess = '';
       this.selected.chat.splice(this.selected.chat.length, 0, this.newMessComplete);
@@ -162,6 +161,8 @@ var app = new Vue({
       setTimeout(() => {
         this.selected.chat.splice(this.selected.chat.length, 0, this.replyComplete);
         this.selected.lastMess = this.replyComplete.text;
+        this.selected.lastSeen = 'Ultimo accesso oggi alle '+this.replyComplete.hour;
+        this.replyComplete = {};
       }, 1000);
     },
     filterChat() {
@@ -191,9 +192,10 @@ var app = new Vue({
     },
     deleteMess(index) {
       this.selected.chat.splice(index, 1);
-      this.selected.lastMess = this.selected.chat[index-1].text;
       document.getElementById(this.boxOpen).style.display = 'none';
       document.getElementById('menu-closer').style.display = 'none';
+      var y = this.selected.chat.length - 1;
+      this.selected.lastMess = this.selected.chat[y].text;
     }
   }
 });

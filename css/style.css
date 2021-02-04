@@ -281,6 +281,11 @@ body{
   text-align: right;
   color: #a2a2a2;
   cursor: pointer;
+  display: none;
+}
+
+.message:hover i{
+  display: block;
 }
 
 .message .menu-box{
